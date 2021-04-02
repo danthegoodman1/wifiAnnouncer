@@ -6,6 +6,7 @@ import (
 	_ "embed"
 	"fmt"
 	"net"
+	"os"
 	"os/exec"
 	"time"
 
@@ -186,6 +187,9 @@ func main() {
 			continue
 		}
 		for _, name := range names { // Check if people have arrived
+			if os.Getenv("DEBUG") == "true" {
+				fmt.Println(name)
+			}
 			foundAddrs = append(foundAddrs, name)
 			if arrivedName := hasArrived(name); arrivedName != "" {
 				sayHome(arrivedName)
