@@ -2,10 +2,13 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"net"
 	"os/exec"
 	"time"
+
+	_ "embed"
 )
 
 func sayHome() {
@@ -15,6 +18,35 @@ func sayHome() {
 		panic(err)
 	}
 }
+
+type aBoy struct {
+	People []struct {
+		Lan   string `json:"lan"`
+		Name  string `json:"name"`
+		State string `json:"state"`
+	} `json:"people"`
+}
+
+func (b *aBoy) inDerDo(lanName string) bool {
+	for _, i := range b.People {
+		if lanName == i.Lan {
+			return true
+		}
+	}
+	return false
+}
+
+func (b *aBoy) UpdateByLan(lan string, state string) {
+	for i, _ := range b.People {
+		if lan == b.People[i].Lan {
+			b.People[i].State = "hey"
+		}
+	}
+}
+
+// TODO: Update to read file so we can update state... or just switch to sqlite or something better than a json file
+//go:embed people.json
+var theBoy []byte
 
 func main() {
 	// Figure out base address
@@ -26,6 +58,10 @@ func main() {
 	// for in := range ifaces {
 	// 	fmt.Println(ifaces[in])
 	// }
+
+	var myStuff aBoy
+	json.Unmarshal(theBoy, &myStuff)
+	fmt.Println(myStuff)
 	r := &net.Resolver{
 		PreferGo: true,
 		Dial: func(ctx context.Context, network, address string) (net.Conn, error) {
@@ -43,8 +79,11 @@ func main() {
 		// fmt.Println(names)
 		for _, name := range names {
 			fmt.Println(name)
-			if name == "dans-iphone-x.lan." {
+			if myStuff.inDerDo(name) {
 				go sayHome()
+				myStuff.UpdateByLan(name, "here")
+				dat, _ := json.Marshal(myStuff)
+				fmt.Println(string(dat))
 			}
 		}
 	}
