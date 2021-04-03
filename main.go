@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	_ "embed"
 	"fmt"
+	"goDeviceScanner/speaking"
 	"net"
 	"os"
 	"os/exec"
@@ -65,7 +66,7 @@ func hasArrived(lan string) string {
 		if err != nil {
 			panic(err)
 		}
-		fmt.Printf("Updated %v rows for hasArrived\n", numRows)
+		fmt.Printf("Deemed arrived %v\n", numRows)
 		return spokenName
 	}
 	return ""
@@ -162,6 +163,9 @@ func main() {
 	// 	fmt.Println(ifaces[in])
 	// }
 
+	// Check GCP Connection
+	speaking.TestAuth()
+
 	// Open DB
 	dbConn, err := sql.Open("sqlite3", "./people.db")
 	if err != nil {
@@ -180,27 +184,32 @@ func main() {
 			return d.DialContext(ctx, network, "192.168.86.1:53")
 		},
 	}
-	var foundAddrs []string
-	for i := 0; i < 255; i++ {
-		names, err := r.LookupAddr(context.TODO(), (fmt.Sprintf("192.168.86.%v", i)))
-		if err != nil {
-			continue
+	for true {
+		if os.Getenv("DEBUG") == "true" {
+			fmt.Println("Running")
 		}
-		for _, name := range names { // Check if people have arrived
-			if os.Getenv("DEBUG") == "true" {
-				fmt.Println(name)
+		var foundAddrs []string
+		for i := 0; i < 255; i++ {
+			names, err := r.LookupAddr(context.TODO(), (fmt.Sprintf("192.168.86.%v", i)))
+			if err != nil {
+				continue
 			}
-			foundAddrs = append(foundAddrs, name)
-			if arrivedName := hasArrived(name); arrivedName != "" {
-				sayHome(arrivedName)
+			for _, name := range names { // Check if people have arrived
+				if os.Getenv("DEBUG") == "true" {
+					fmt.Println(name)
+				}
+				foundAddrs = append(foundAddrs, name)
+				if arrivedName := hasArrived(name); arrivedName != "" {
+					speaking.Say(arrivedName, "arrived")
+				}
 			}
-
 		}
-	}
-	// Check who is away
-	peeps := hasLeft(foundAddrs)
-	for _, person := range peeps {
-		sayLeft(person[1])
+		// Check who is away
+		peeps := hasLeft(foundAddrs)
+		for _, person := range peeps {
+			speaking.Say(person[1], "left")
+		}
+		time.Sleep(time.Millisecond * 2500)
 	}
 
 	db.Close()

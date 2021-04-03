@@ -1,1 +1,4 @@
 *.db
+keys.json
+cachedAudio
+request.json
