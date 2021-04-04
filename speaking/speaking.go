@@ -13,6 +13,10 @@ import (
 	texttospeechpb "google.golang.org/genproto/googleapis/cloud/texttospeech/v1"
 )
 
+var (
+	c *oto.Context
+)
+
 func TestAuth() {
 	gac := os.Getenv("GOOGLE_APPLICATION_CREDENTIALS")
 	if gac == "" {
@@ -73,9 +77,11 @@ func Say(spokenName string, status string) (usedCache bool, err error) {
 		panic(err)
 	}
 
-	c, err := oto.NewContext(d.SampleRate(), 2, 2, 8192)
-	if err != nil {
-		panic(err)
+	if c == nil {
+		c, err = oto.NewContext(d.SampleRate(), 2, 2, 8192)
+		if err != nil {
+			panic(err)
+		}
 	}
 
 	p := c.NewPlayer()
@@ -85,7 +91,6 @@ func Say(spokenName string, status string) (usedCache bool, err error) {
 	fmt.Println(2)
 
 	p.Close()
-	c.Close()
 	f.Close()
 	return usedCache, nil
 }
