@@ -88,7 +88,6 @@ func Say(spokenName string, status string) (usedCache bool, err error) {
 	if _, err := io.Copy(p, d); err != nil {
 		return false, err
 	}
-	fmt.Println(2)
 
 	p.Close()
 	f.Close()
