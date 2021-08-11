@@ -6,6 +6,7 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"wifiAnnouncer/configParser"
 
 	texttospeech "cloud.google.com/go/texttospeech/apiv1"
 	"github.com/hajimehoshi/go-mp3"
@@ -20,16 +21,20 @@ var (
 func TestAuth() {
 	gac := os.Getenv("GOOGLE_APPLICATION_CREDENTIALS")
 	if gac == "" {
-		panic("GOOGLE_APPLICATION_CREDENTIALS env var not found!")
+		panic("GOOGLE_APPLICATION_CREDENTIALS env var not found! It should be the path of a credentials JSON file.")
 	}
 }
 
 // Say says that a person has left or arrived, returning whether the audio file was from cache
 func Say(spokenName string, status string) (usedCache bool, err error) {
+	DebugLog("Saying", fmt.Sprintf("%s has %s", spokenName, status))
+	if _, err := os.Stat(fmt.Sprintf("./cachedAudio", spokenName, status)); os.IsNotExist(err) {
+		os.Mkdir("./cachedAudio", 0777)
+	}
 	// Check cache
 	usedCache = true
 	if _, err := os.Stat(fmt.Sprintf("./cachedAudio/%s-%s.mp3", spokenName, status)); os.IsNotExist(err) {
-		fmt.Println("File cache not used")
+		DebugLog("File cache not used")
 		usedCache = false
 		// Make request to GCP and get audio file
 		ctx := context.Background()
@@ -44,8 +49,8 @@ func Say(spokenName string, status string) (usedCache bool, err error) {
 				},
 			},
 			Voice: &texttospeechpb.VoiceSelectionParams{
-				LanguageCode: "en-US",
-				Name:         "en-US-Wavenet-D",
+				LanguageCode: configParser.Config.LanguageCode,
+				Name:         configParser.Config.VoiceName,
 			},
 			AudioConfig: &texttospeechpb.AudioConfig{
 				AudioEncoding: texttospeechpb.AudioEncoding_MP3,
@@ -62,9 +67,9 @@ func Say(spokenName string, status string) (usedCache bool, err error) {
 		if err != nil {
 			panic(err)
 		}
-		fmt.Println("Audio file cached")
+		DebugLog("Audio file cached")
 	} else {
-		fmt.Println("File cache used")
+		DebugLog("File cache used")
 	}
 	// Play mp3 file
 	f, err := os.Open(fmt.Sprintf("./cachedAudio/%s-%s.mp3", spokenName, status))
@@ -92,4 +97,20 @@ func Say(spokenName string, status string) (usedCache bool, err error) {
 	p.Close()
 	f.Close()
 	return usedCache, nil
+}
+
+func DebugLog(message ...interface{}) {
+	if os.Getenv("DEBUG") == "true" {
+		fmt.Println(message...)
+	}
+}
+
+func IsInConfig(name string) bool {
+	inConfig := false
+	for _, user := range configParser.Config.RegisteredDevices {
+		if name == user.Hostname {
+			inConfig = true
+		}
+	}
+	return inConfig
 }

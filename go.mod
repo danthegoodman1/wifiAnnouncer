@@ -1,4 +1,4 @@
-module goDeviceScanner
+module wifiAnnouncer
 
 go 1.16
 
@@ -15,4 +15,5 @@ require (
 	golang.org/x/sys v0.0.0-20210403161142-5e06dd20ab57 // indirect
 	golang.org/x/text v0.3.6 // indirect
 	google.golang.org/genproto v0.0.0-20210402141018-6c239bbf2bb1 // indirect
+	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
