@@ -45,7 +45,7 @@ func Say(spokenName string, status string) (usedCache bool, err error) {
 		req := texttospeechpb.SynthesizeSpeechRequest{
 			Input: &texttospeechpb.SynthesisInput{
 				InputSource: &texttospeechpb.SynthesisInput_Text{
-					Text: fmt.Sprintf("%s has %s", spokenName, status),
+					Text: fmt.Sprintf("%s %s", spokenName, status),
 				},
 			},
 			Voice: &texttospeechpb.VoiceSelectionParams{

@@ -220,7 +220,7 @@ func main() {
 				if arrivedName := hasArrived(name); arrivedName != "" {
 					if speaking.IsInConfig(name) {
 						DebugLog(name, "is in config, speaking")
-						speaking.Say(arrivedName, "arrived")
+						speaking.Say(arrivedName, configParser.Config.ArrivedSuffix)
 					}
 				}
 			}
@@ -230,7 +230,7 @@ func main() {
 		for _, person := range peeps {
 			if speaking.IsInConfig(person[0]) {
 				DebugLog(person, "is in config, speaking")
-				speaking.Say(person[1], "left")
+				speaking.Say(person[1], configParser.Config.LeftSuffix)
 			}
 		}
 		time.Sleep(time.Millisecond * 2500)

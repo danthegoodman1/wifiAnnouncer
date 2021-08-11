@@ -16,6 +16,8 @@ type ConfigFile struct {
 	VoiceName         string `yaml:"voiceName"`
 	LanguageCode      string `yaml:"languageCode"`
 	Interface         string `yaml:"interface"`
+	ArrivedSuffix     string `yaml:"arrivedSuffix"`
+	LeftSuffix        string `yaml:"leftSuffix"`
 	RegisteredDevices []struct {
 		Name         string `yaml:"name"`
 		Hostname     string `yaml:"hostname"`
