@@ -26,14 +26,14 @@ func TestAuth() {
 }
 
 // Say says that a person has left or arrived, returning whether the audio file was from cache
-func Say(spokenName string, status string) (usedCache bool, err error) {
-	DebugLog("Saying", fmt.Sprintf("%s has %s", spokenName, status))
-	if _, err := os.Stat(fmt.Sprintf("./cachedAudio", spokenName, status)); os.IsNotExist(err) {
+func Say(spokenName, prefix, stuffix string) (usedCache bool, err error) {
+	DebugLog("Saying", fmt.Sprintf("%s %s %s", prefix, spokenName, stuffix))
+	if _, err := os.Stat(fmt.Sprintf("./cachedAudio", spokenName, stuffix)); os.IsNotExist(err) {
 		os.Mkdir("./cachedAudio", 0777)
 	}
 	// Check cache
 	usedCache = true
-	if _, err := os.Stat(fmt.Sprintf("./cachedAudio/%s-%s.mp3", spokenName, status)); os.IsNotExist(err) {
+	if _, err := os.Stat(fmt.Sprintf("./cachedAudio/%s-%s-%s.mp3", prefix, spokenName, stuffix)); os.IsNotExist(err) {
 		DebugLog("File cache not used")
 		usedCache = false
 		// Make request to GCP and get audio file
@@ -45,7 +45,7 @@ func Say(spokenName string, status string) (usedCache bool, err error) {
 		req := texttospeechpb.SynthesizeSpeechRequest{
 			Input: &texttospeechpb.SynthesisInput{
 				InputSource: &texttospeechpb.SynthesisInput_Text{
-					Text: fmt.Sprintf("%s %s", spokenName, status),
+					Text: fmt.Sprintf("%s %s %s", prefix, spokenName, stuffix),
 				},
 			},
 			Voice: &texttospeechpb.VoiceSelectionParams{
@@ -63,7 +63,7 @@ func Say(spokenName string, status string) (usedCache bool, err error) {
 			panic(err)
 		}
 		// Store file in cache
-		err = ioutil.WriteFile(fmt.Sprintf("./cachedAudio/%s-%s.mp3", spokenName, status), resp.AudioContent, 0666)
+		err = ioutil.WriteFile(fmt.Sprintf("./cachedAudio/%s-%s-%s.mp3", prefix, spokenName, stuffix), resp.AudioContent, 0666)
 		if err != nil {
 			panic(err)
 		}
@@ -72,7 +72,7 @@ func Say(spokenName string, status string) (usedCache bool, err error) {
 		DebugLog("File cache used")
 	}
 	// Play mp3 file
-	f, err := os.Open(fmt.Sprintf("./cachedAudio/%s-%s.mp3", spokenName, status))
+	f, err := os.Open(fmt.Sprintf("./cachedAudio/%s-%s-%s.mp3", prefix, spokenName, stuffix))
 	if err != nil {
 		panic(err)
 	}

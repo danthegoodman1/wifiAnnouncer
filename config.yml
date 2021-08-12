@@ -2,7 +2,9 @@ voiceName: en-US-Wavenet-D
 languageCode: en-US
 interface: "192.168.86.1"
 arrivedSuffix: has arrived
-leftSuffix: has left the location
+leftSuffix: has left
+arrivedPrefix: Look!
+leftPrefix: Goodbye,
 registeredDevices:
   - name: Dan
     hostname: dans-iphone-x.lan.

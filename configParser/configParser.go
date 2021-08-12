@@ -18,6 +18,8 @@ type ConfigFile struct {
 	Interface         string `yaml:"interface"`
 	ArrivedSuffix     string `yaml:"arrivedSuffix"`
 	LeftSuffix        string `yaml:"leftSuffix"`
+	ArrivedPrefix     string `yaml:"arrivedPrefix"`
+	LeftPrefix        string `yaml:"leftPrefix"`
 	RegisteredDevices []struct {
 		Name         string `yaml:"name"`
 		Hostname     string `yaml:"hostname"`
