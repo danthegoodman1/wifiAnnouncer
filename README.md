@@ -2,6 +2,26 @@
 
 WifiAnnouncer scans your local WiFi network and monitors known hostnames for their presence. It will announce when they connect to the network, and when they leave. This is (usually) indicative of someone leaving or arriving at a location.
 
+## Requirements
+
+1. Golang must be installed
+2. You must create a GCP account & project, and create a service account file that has permission of
+
+- Go to GCP dashboard `->` IAM & Admin `->` Service Accounts on the left nav `->` Create Service Account on the top nav `->` Input a name `->` Create and Continue `->` Select a role `->` Cloud Speech Editor `->` Continue `->` Done
+- Then click on your service account in the list `->` Keys in the top nav `->` Add Key `->` Create new key `->` JSON `->` Create
+- That newly downloaded file will be what you set the `GOOGLE_APPLICATION_CREDENTIALS` variable to
+
+## Building and Running Locally
+
+1. Clone the repo: `git clone https://github.com/danthegoodman1/wifiAnnouncer`
+2. Build it: `go build`
+3. Set your GCP service account file path environment variable: `export GOOGLE_APPLICATION_CREDENTIALS=/some/path/project-210111-910eb110cabd.json`
+4. Run it: `./wifiAnnouncer`
+
+## Building and Running with balena
+
+You don't want to run this on your laptop, so let's put it on something we can stick in the corner.
+
 ## Configuration
 
 The following is an example config file:
@@ -47,6 +67,10 @@ To find all voice and language code options visit: https://cloud.google.com/text
 ### Scanning for Devices
 
 ### Registering Devices
+
+### Debug logging
+
+Executing
 
 ### DB Corruption
 
