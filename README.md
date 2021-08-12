@@ -58,7 +58,7 @@ registeredDevices:
     defaultState: away
 ```
 
-With this configuration, when my iPhone X disconnects from the wifi, the voice will say _Look! Dan has arrived_, and when it disconnects it will say _Goodbye, Dan has left_.
+With this configuration, when my iPhone X disconnects from the wifi, the voice will say _"Look! Dan has arrived"_, and when it disconnects it will say _"Goodbye, Dan has left"_.
 
 To find all voice and language code options visit: https://cloud.google.com/text-to-speech#section-2 and play with the options!
 
