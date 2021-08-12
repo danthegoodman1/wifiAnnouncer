@@ -70,7 +70,7 @@ To find all voice and language code options visit: https://cloud.google.com/text
 
 ### Debug logging
 
-Executing
+Setting the environment variable `DEBUG=true` will add lots of additional logging to `stdout`.
 
 ### DB Corruption
 
