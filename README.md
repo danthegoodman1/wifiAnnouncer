@@ -56,6 +56,10 @@ registeredDevices:
     hostname: dans-iphone-x.lan.
     # Whether when they are added, they are known as here or away (initial state)
     defaultState: away
+
+# Whether to scan every 10 seconds, or to run the announcer
+# This will scan every 10 seconds
+scanOnly: true
 ```
 
 With this configuration, when my iPhone X disconnects from the wifi, the voice will say _"Look! Dan has arrived"_, and when it disconnects it will say _"Goodbye, Dan has left"_.
