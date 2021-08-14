@@ -2,3 +2,5 @@ version: "3.9"  # optional since v1.27.0
 services:
   wifiAnnouncer:
     build: .
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/creds.json
