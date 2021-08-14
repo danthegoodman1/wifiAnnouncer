@@ -4,7 +4,6 @@ import (
 	"context"
 	"database/sql"
 	_ "embed"
-	"flag"
 	"fmt"
 	"net"
 	"os"
@@ -136,8 +135,6 @@ func SetupDB() {
 	}
 }
 
-// TODO: Update to read file so we can update state... or just switch to sqlite or something better than a json file
-
 func main() {
 	// Figure out base address
 	// ifaces, err := net.Interfaces()
@@ -149,7 +146,6 @@ func main() {
 	// 	fmt.Println(ifaces[in])
 	// }
 	configParser.ParseConfig()
-	parseFlags()
 
 	r := &net.Resolver{
 		PreferGo: true,
@@ -161,7 +157,7 @@ func main() {
 		},
 	}
 
-	if scannerMode {
+	if configParser.Config.ScanOnly {
 		fmt.Println("### Scanning for devices!")
 		for i := 0; i < 255; i++ {
 			names, err := r.LookupAddr(context.TODO(), (fmt.Sprintf("%s.%d", configParser.InterfaceToPrefix(), i)))
@@ -235,11 +231,6 @@ func main() {
 		}
 		time.Sleep(time.Millisecond * 2500)
 	}
-}
-
-func parseFlags() {
-	flag.BoolVar(&scannerMode, "scannerMode", false, "Performs a network scan and exits")
-	flag.Parse()
 }
 
 func verifyRegisteredDevices() {

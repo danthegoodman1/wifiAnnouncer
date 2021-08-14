@@ -9,3 +9,4 @@ registeredDevices:
   - name: Dan
     hostname: dans-iphone-x.lan.
     defaultState: away
+scanOnly: true
