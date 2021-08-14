@@ -3,4 +3,4 @@ services:
   wifiAnnouncer:
     build: .
     environment:
-      - GOOGLE_APPLICATION_CREDENTIALS=/creds.json
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/creds.json
