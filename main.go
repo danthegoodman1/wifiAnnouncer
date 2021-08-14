@@ -157,7 +157,8 @@ func main() {
 		},
 	}
 
-	if configParser.Config.ScanOnly {
+	// Scan every 10 seconds
+	for configParser.Config.ScanOnly {
 		fmt.Println("### Scanning for devices!")
 		for i := 0; i < 255; i++ {
 			names, err := r.LookupAddr(context.TODO(), (fmt.Sprintf("%s.%d", configParser.InterfaceToPrefix(), i)))
@@ -168,7 +169,7 @@ func main() {
 				fmt.Println(name)
 			}
 		}
-		os.Exit(0)
+		time.Sleep(time.Second * 10)
 	}
 
 	// Check GCP Connection
