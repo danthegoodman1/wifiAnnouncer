@@ -6,7 +6,7 @@ COPY go.* .
 COPY creds.json .
 RUN go mod download
 
-COPY *.go .
+COPY . .
 
 RUN go build -o /app
 
