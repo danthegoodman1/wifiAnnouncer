@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY go.* .
 COPY creds.json .
+COPY config.yml .
 RUN go mod download
 
 COPY . .
