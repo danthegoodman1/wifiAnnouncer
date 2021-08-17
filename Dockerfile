@@ -2,9 +2,9 @@ FROM golang:1.16-alpine
 
 WORKDIR /app
 
-COPY go.* .
-COPY creds.json .
-COPY config.yml .
+COPY go.* /app/
+COPY creds.json /app/
+COPY config.yml /app/
 RUN go mod download
 
 COPY . .
