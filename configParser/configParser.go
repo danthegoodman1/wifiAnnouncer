@@ -2,6 +2,7 @@ package configParser
 
 import (
 	"io/ioutil"
+	"os"
 	"strings"
 
 	"gopkg.in/yaml.v2"
@@ -29,7 +30,7 @@ type ConfigFile struct {
 }
 
 func ParseConfig() {
-	f, err := ioutil.ReadFile("./config.yml")
+	f, err := ioutil.ReadFile(os.Getenv("CONFIG_PATH"))
 
 	if err != nil {
 		panic(err)

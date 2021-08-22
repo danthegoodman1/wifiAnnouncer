@@ -8,8 +8,8 @@ import (
 	"net"
 	"os"
 	"time"
-	"wifiAnnouncer/configParser"
-	"wifiAnnouncer/speaking"
+	"wifiannouncer/configParser"
+	"wifiannouncer/speaking"
 
 	_ "github.com/mattn/go-sqlite3"
 )

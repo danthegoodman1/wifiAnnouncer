@@ -6,7 +6,7 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
-	"wifiAnnouncer/configParser"
+	"wifiannouncer/configParser"
 
 	texttospeech "cloud.google.com/go/texttospeech/apiv1"
 	"github.com/hajimehoshi/go-mp3"
@@ -27,7 +27,7 @@ func TestAuth() {
 
 // Say says that a person has left or arrived, returning whether the audio file was from cache
 func Say(spokenName, prefix, stuffix string) (usedCache bool, err error) {
-	DebugLog("Saying", fmt.Sprintf("%s %s %s", prefix, spokenName, stuffix))
+	fmt.Println("Saying", fmt.Sprintf("%s %s %s", prefix, spokenName, stuffix))
 	if _, err := os.Stat(fmt.Sprintf("./cachedAudio", spokenName, stuffix)); os.IsNotExist(err) {
 		os.Mkdir("./cachedAudio", 0777)
 	}

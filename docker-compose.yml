@@ -1,7 +1,7 @@
 version: "2"
 services:
-  wifi-a
-  nnouncer:
+  wifi-announcer:
     build: .
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/app/creds.json
+      - CONFIG_PATH=/app/config.yml
