@@ -71,7 +71,11 @@ To find all voice and language code options visit: https://cloud.google.com/text
 
 ### Scanning for Devices
 
+WifiAnnouncer scans for all devices on the specified `/24` subnet. It takes the `hostnames` from all of the devices scanned and compares them against the known configuration.
+
 ### Registering Devices
+
+You can register devices in the `config.yml`. When devices exist in there, WifiAnnouncer knows to track them in its internal DB. Everything is stored in a SQLite3 DB, so it can easily be hooked into other systems like an Admin API/Dashboard (coming soon?)
 
 ### Debug logging
 
