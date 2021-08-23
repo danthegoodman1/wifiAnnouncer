@@ -15,8 +15,9 @@ WifiAnnouncer scans your local WiFi network and monitors known hostnames for the
 
 1. Clone the repo: `git clone https://github.com/danthegoodman1/wifiAnnouncer`
 2. Build it: `go build`
-3. Set your GCP service account file path environment variable: `export GOOGLE_APPLICATION_CREDENTIALS=/some/path/project-210111-910eb110cabd.json`
-4. Run it: `./wifiAnnouncer`
+3. Set your GCP service account file path environment variable: `export GOOGLE_APPLICATION_CREDENTIALS=/some/path/project-210111-910eb110cabd.json` (must use `./creds.json` for the balena Docker image)
+4. Point to your config file with `export CONFIG_PATH=/path/to/config.yml` (must use `./config.yml` for balena image)
+5. Run it: `./wifiAnnouncer`
 
 ## Building and Running with balena
 
