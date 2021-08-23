@@ -17,6 +17,7 @@ RUN go version
 
 RUN go build -o /app/wifiAnnouncer
 
+# Change image appropriately for the board you are using, see options at: https://www.balena.io/docs/reference/base-images/base-images-ref/
 FROM balenalib/raspberrypi4-64-debian
 COPY --from=build /app/wifiAnnouncer /app/
 COPY --from=build /app/creds.json /app/
