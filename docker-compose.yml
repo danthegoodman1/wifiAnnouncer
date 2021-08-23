@@ -1,6 +1,7 @@
 version: "2"
 services:
   wifi-announcer:
+    privileged: true
     build: .
     environment:
       - GOOGLE_APPLICATION_CREDENTIALS=/app/creds.json

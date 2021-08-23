@@ -3,7 +3,7 @@ FROM golang:1.16-buster as build
 WORKDIR /app
 
 RUN apt update
-RUN apt install libasound2-dev alsa-utils gcc -y
+RUN apt install libasound2-dev libasound2-plugins alsa-utils gcc -y
 
 COPY go.* /app/
 COPY creds.json /app/
