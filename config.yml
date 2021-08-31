@@ -10,3 +10,4 @@ registeredDevices:
     hostname: dans-iphone-x.lan.
     defaultState: away
 scanOnly: false
+dnsServer: "192.168.86.1"

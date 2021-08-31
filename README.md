@@ -61,6 +61,9 @@ registeredDevices:
 # Whether to scan every 10 seconds, or to run the announcer
 # This will scan every 10 seconds
 scanOnly: true
+
+# The DNS server on my local network, this is commonly your router's IP address (which is also commonly the X.X.X.1 address)
+dnsServer: "192.168.86.1"
 ```
 
 With this configuration, when my iPhone X disconnects from the wifi, the voice will say _"Look! Dan has arrived"_, and when it disconnects it will say _"Goodbye, Dan has left"_.

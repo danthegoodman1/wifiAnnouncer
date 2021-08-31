@@ -26,7 +26,8 @@ type ConfigFile struct {
 		Hostname     string `yaml:"hostname"`
 		DefaultState string `yaml:"defaultState"`
 	} `yaml:"registeredDevices"`
-	ScanOnly bool `yaml:"scanOnly"`
+	ScanOnly  bool   `yaml:"scanOnly"`
+	DNSServer string `yaml:"dnsServer"`
 }
 
 func ParseConfig() {

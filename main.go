@@ -153,7 +153,7 @@ func main() {
 			d := net.Dialer{
 				Timeout: time.Millisecond * time.Duration(10000),
 			}
-			return d.DialContext(ctx, network, "192.168.86.1:53")
+			return d.DialContext(ctx, network, fmt.Sprintf("%s:53", configParser.Config.DNSServer))
 		},
 	}
 
