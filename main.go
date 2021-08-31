@@ -207,7 +207,7 @@ func main() {
 		DebugLog("Starting to scan")
 		var foundAddrs []string
 		for i := 0; i < 255; i++ {
-			names, err := r.LookupAddr(context.TODO(), (fmt.Sprintf("192.168.86.%v", i)))
+			names, err := r.LookupAddr(context.TODO(), (fmt.Sprintf("%s.%v", configParser.InterfaceToPrefix(), i)))
 			if err != nil {
 				continue
 			}
