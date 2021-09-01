@@ -147,6 +147,8 @@ func main() {
 	// }
 	configParser.ParseConfig()
 
+	DebugLog("Using DNS server", fmt.Sprintf("%s:53", configParser.Config.DNSServer))
+
 	r := &net.Resolver{
 		PreferGo: true,
 		Dial: func(ctx context.Context, network, address string) (net.Conn, error) {
